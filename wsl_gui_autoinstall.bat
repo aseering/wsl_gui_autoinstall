@@ -38,12 +38,11 @@ ECHO --- Installing PulseAudio
 xcopy /e "%TMP%\pulseaudio" "%AppData%\PulseAudio"
 
 ECHO --- Setting PulseAudio to run at startup
-echo set ws=wscript.createobject("wscript.shell")      > "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\start_pulseaudio.vbe"
-echo ws.run "%AppData%\PulseAudio\bin\pulseaudio.exe" >> "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\start_pulseaudio.vbe"
+echo set ws=wscript.createobject("wscript.shell") > "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\start_pulseaudio.vbe"
+echo ws.run "%AppData%\PulseAudio\bin\pulseaudio.exe --exit-idle-time=-1" >> "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\start_pulseaudio.vbe"
 
 REM Recomended/required settings
 echo load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 >> "%AppData%\PulseAudio\etc\pulse\default.pa"
-echo exit-idle-time = -1                                                           >> "%AppData%\PulseAudio\etc\pulse\default.pa"
 "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\start_pulseaudio.vbe"
 ECHO When prompted, DO NOT allow 'pulseaudio' access to any of your networks.  It doesn't need access.
 
