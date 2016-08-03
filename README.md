@@ -12,3 +12,5 @@ To run:
 If the script opens in a text editor rather than running, it probably needs to be renamed.  Note that Windows hides the last file extension by default in many configurations.  It may be easy to do this using the "move" command at a Windows Command Prompt.
 
 This script has only been lightly tested.  You will probably need to debug it on your own system.  Please read through the script and make sure you understand what it is doing before using it.
+
+Thanks to @therealkenc, @fpqc, and many others on the [BashOnWindows bug-tracker](https://github.com/Microsoft/BashOnWindows/issues/486) for figuring out many of the individual steps in these scripts.  Most of them are also explained in more detail [here](http://wsl-forum.qztc.io/viewforum.php?f=6).
