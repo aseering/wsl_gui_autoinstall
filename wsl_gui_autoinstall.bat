@@ -9,7 +9,7 @@ REM One big long command to be absolutely sure we're not prompted for a password
 echo yes ^| add-apt-repository ppa:aseering/wsl-pulseaudio > "%TMP%\script.sh"
 echo apt-get update >> "%TMP%\script.sh"
 echo apt-get -y install pulseaudio unzip >> "%TMP%\script.sh"
-echo sed -i 's/; default-server =/default_server = 127.0.0.1/' /etc/pulse/client.conf >> "%TMP%\script.sh"
+echo sed -i 's/; default-server =/default-server = 127.0.0.1/' /etc/pulse/client.conf >> "%TMP%\script.sh"
 echo sed -i "s$<listen>.*</listen>$<listen>tcp:host=localhost,port=0</listen>$" /etc/dbus-1/session.conf >> "%TMP%\script.sh"
 C:\Windows\System32\bash.exe -c "chmod +x '%LINUXTMP%/script.sh' ; tr -d $'\r' < '%LINUXTMP%/script.sh' | tee '%LINUXTMP%/script_clean.sh'; sudo '%LINUXTMP%/script_clean.sh'"
 
@@ -38,8 +38,8 @@ ECHO --- Installing PulseAudio
 xcopy /e "%TMP%\pulseaudio" "%AppData%\PulseAudio"
 
 ECHO --- Setting PulseAudio to run at startup
-echo set ws=wscript.createobject("wscript.shell") > "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\start_pulseaudio.vbe"
-echo ws.run "%AppData%\PulseAudio\bin\pulseaudio.exe --exit-idle-time=-1" >> "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\start_pulseaudio.vbe"
+echo set ws=wscript.createobject("wscript.shell") > "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup Items\start_pulseaudio.vbe"
+echo ws.run "%AppData%\PulseAudio\bin\pulseaudio.exe --exit-idle-time=-1",0 >> "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup Items\start_pulseaudio.vbe"
 
 REM Recomended/required settings
 echo load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 >> "%AppData%\PulseAudio\etc\pulse\default.pa"
