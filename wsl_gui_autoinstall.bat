@@ -21,14 +21,12 @@ ECHO --- PulseAudio...
 C:\Windows\System32\bash.exe -xc "wget -cO '%LINUXTMP%/pulseaudio.zip' 'http://bosmans.ch/pulseaudio/pulseaudio-1.1.zip'"
 
 ECHO --- Installing packages
-ECHO --- Running VcXsrv graphical installer; please accept all of the default options
-"%TMP%\vcxsrv.exe"
 
 ECHO --- Adding link for X Server to Startup Items
 powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk');$s.TargetPath='%ProgramFiles%\VcXsrv\vcxsrv.exe';$s.Arguments=':0 -ac -terminate -lesspointer -multiwindow -clipboard -wgl';$s.Save()"
 
 ECHO --- Launching X Server.  DO NOT grant access to any network interfaces if prompted; they are unnecessary.
-"%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk"
+START "%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk"
 
 ECHO --- Adding X environment variable to your .bashrc
 C:\Windows\System32\bash.exe -xc "echo 'export DISPLAY=localhost:0' >> ~/.bashrc"
