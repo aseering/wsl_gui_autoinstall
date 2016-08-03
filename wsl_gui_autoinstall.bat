@@ -8,7 +8,7 @@ REM One big long command to be absolutely sure we're not prompted for a password
 
 echo yes ^| add-apt-repository ppa:aseering/wsl-pulseaudio > "%TMP%\script.sh"
 echo apt-get update >> "%TMP%\script.sh"
-echo apt-get install pulseaudio unzip >> "%TMP%\script.sh"
+echo apt-get -y install pulseaudio unzip >> "%TMP%\script.sh"
 echo sed -i 's/; default-server =/default_server = 127.0.0.1/' /etc/pulse/client.conf >> "%TMP%\script.sh"
 echo sed -i "s$<listen>.*</listen>$<listen>tcp:host=localhost,port=0</listen>$" /etc/dbus-1/session.conf >> "%TMP%\script.sh"
 C:\Windows\System32\bash.exe -c "chmod +x '%LINUXTMP%/script.sh' ; tr -d $'\r' < '%LINUXTMP%/script.sh' | tee '%LINUXTMP%/script_clean.sh'; sudo '%LINUXTMP%/script_clean.sh'"
@@ -22,11 +22,10 @@ C:\Windows\System32\bash.exe -xc "wget -cO '%LINUXTMP%/pulseaudio.zip' 'http://b
 
 ECHO --- Installing packages
 ECHO --- Running VcXsrv graphical installer; please accept all of the default options
-%TMP%\vcxsrv.exe
+"%TMP%\vcxsrv.exe"
 
 ECHO --- Adding link for X Server to Startup Items
-powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk');$s.TargetPath='%ProgramFiles%\VcXsrv\vcxsrv.exe';$s.Save()"
-"%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk"
+powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk');$s.TargetPath='%ProgramFiles%\VcXsrv\vcxsrv.exe :0 -ac -terminate -lesspointer -multiwindow -clipboard -wgl';$s.Save()"
 
 ECHO --- Adding X environment variable to your .bashrc
 C:\Windows\System32\bash.exe -xc "echo 'export DISPLAY=localhost:0' >> ~/.bashrc"
