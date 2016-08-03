@@ -25,7 +25,10 @@ ECHO --- Running VcXsrv graphical installer; please accept all of the default op
 "%TMP%\vcxsrv.exe"
 
 ECHO --- Adding link for X Server to Startup Items
-powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk');$s.TargetPath='%ProgramFiles%\VcXsrv\vcxsrv.exe :0 -ac -terminate -lesspointer -multiwindow -clipboard -wgl';$s.Save()"
+powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk');$s.TargetPath='%ProgramFiles%\VcXsrv\vcxsrv.exe';$s.Arguments=':0 -ac -terminate -lesspointer -multiwindow -clipboard -wgl';$s.Save()"
+
+ECHO --- Launching X Server.  DO NOT grant access to any network interfaces if prompted; they are unnecessary.
+"%userprofile%\Start Menu\Programs\Startup\VcXsrv.lnk"
 
 ECHO --- Adding X environment variable to your .bashrc
 C:\Windows\System32\bash.exe -xc "echo 'export DISPLAY=localhost:0' >> ~/.bashrc"
@@ -38,12 +41,12 @@ ECHO --- Installing PulseAudio
 xcopy /e "%TMP%\pulseaudio" "%AppData%\PulseAudio"
 
 ECHO --- Setting PulseAudio to run at startup
-echo set ws=wscript.createobject("wscript.shell") > "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup Items\start_pulseaudio.vbe"
-echo ws.run "%AppData%\PulseAudio\bin\pulseaudio.exe --exit-idle-time=-1",0 >> "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup Items\start_pulseaudio.vbe"
+echo set ws=wscript.createobject("wscript.shell") > "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\start_pulseaudio.vbe"
+echo ws.run "%AppData%\PulseAudio\bin\pulseaudio.exe --exit-idle-time=-1",0 >> "%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\start_pulseaudio.vbe"
 
 REM Recomended/required settings
 echo load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 >> "%AppData%\PulseAudio\etc\pulse\default.pa"
-"%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\start_pulseaudio.vbe"
+"%userprofile%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\start_pulseaudio.vbe"
 ECHO When prompted, DO NOT allow 'pulseaudio' access to any of your networks.  It doesn't need access.
 
 ECHO All Done
