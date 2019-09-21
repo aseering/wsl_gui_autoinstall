@@ -1,7 +1,8 @@
 @ECHO OFF
 
-SET "LINUXTMP=$(echo '%TMP:\=\\%' | sed -e 's|\\|/|g' -e 's|^\([A-Za-z]\)\:/\(.*\)|/mnt/\L\1\E/\2|')"
-echo LINUXTMP = "%LINUXTMP%"
+set WSLENV=%WSLENV%:WINTMP
+set WINTMP=%TMP%
+set LINUXTMP='$(wslpath -u \"$WINTMP\")'
 
 ECHO --- Running Linux installation.  You will be prompted for your Ubuntu user's password:
 REM One big long command to be absolutely sure we're not prompted for a password repeatedly
