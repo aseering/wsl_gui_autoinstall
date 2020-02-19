@@ -1,6 +1,6 @@
 @ECHO OFF
 
-set WSLENV=%WSLENV%:WINTMP
+set WSLENV=%WSLENV%:WINTMP/p
 set WINTMP=%TMP%
 set LINUXTMP='$(wslpath -u \"$WINTMP\")'
 
